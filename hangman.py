@@ -1,52 +1,83 @@
 import random
-import words_list as list
+import words_list as wl
 import re
 import sys
 
-def InputCheck():
+
+lifes = 6
+used_letters = []
+
+
+def game_over():
+    print("")
+    print("Suas vidas se esgotaram! x.x Game Over! ")
+    print("")
+    sys.exit()
+
+
+def input_check():
     letter = input("Escolha uma letra: ")
     if not re.match("^[a-z]*$", letter):
         print("Entrada inválida! Tente novamente.")
         print("\n")
+        return False
+    elif letter == "exit":
+        print("Encerrando...")
+        sys.exit()
+    elif letter == "list":
+        print(f"Letras usadas: {used_letters}")
+        return False
     elif len(letter) > 1 or len(letter) <= 0:
         print("Entrada inválida! Tente novamente.")
         print("\n")
+        return False
+    elif letter in used_letters:
+        print(f"Você já utilizou a letra '{letter}'! Tente novamente.")
+        return False
     else:
+        used_letters.append(letter)
         return letter.upper()
 
-def Hangman(hangman, result):
+
+def hangman_game(hangman, result, lifes_remaining):
+    print(f"Você tem {lifes_remaining} vidas restantes!")
+    if lifes_remaining <= 0:
+        game_over()
     for x in hangman:
         print(x, end=" ")
     print("\n")
-    letter = InputCheck()
-    for index, val in enumerate(result):
-        if letter == val:
-            hangman[index] = letter;
-    if not "-" in hangman:
-        for x in hangman:
-            print(x, end=" ")
-        print("\n")
-        print("yaaaayyyyy!!!! You win!")
-        print("\n")
+    letter = input_check()
+    if not letter:
+        hangman_game(hangman, result, lifes_remaining)
     else:
-        Hangman(hangman, result)
-                    
+        for index, val in enumerate(result):
+            if letter not in result:
+                print(f"Desuclpe, mas a palavra não possui a letra '{letter}'.")
+                lifes_remaining -= 1
+                break
+            else:
+                if letter == val:
+                    hangman[index] = letter
+        if "-" not in hangman:
+            for x in hangman:
+                print(x, end=" ")
+            print("\n")
+            print("yaaaayyyyy!!!! You win!")
+            print("\n")
+        else:
+            hangman_game(hangman, result, lifes_remaining)
 
-def Start():
-    selected_word = random.randint(0, (list.words.__len__() - 1))
-    word = list.words[selected_word].upper()
+
+def start():
+    selected_word = random.randint(0, (wl.words.__len__() - 1))
+    word = wl.words[selected_word].upper()
     result = []
     hangman = []
     for x in word:
         result.append(x)
     for letter in result:
         hangman.append("-")
-    Hangman(hangman, result)
-    
-Start()
+    hangman_game(hangman, result, lifes)
 
 
-#print(hangman)
-
-#print(word)
-
+start()

@@ -1,1 +1,1 @@
-words = ["Test", "Random", "Hangman"]
+words = ["Test"]
