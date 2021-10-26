@@ -39,7 +39,7 @@ def input_check():
         return letter.upper()
 
 
-def hangman_game(hangman, result, lifes_remaining):
+def hangman_game(hangman, word, lifes_remaining):
     print(f"Você tem {lifes_remaining} vidas restantes!")
     if lifes_remaining <= 0:
         game_over()
@@ -48,10 +48,10 @@ def hangman_game(hangman, result, lifes_remaining):
     print("\n")
     letter = input_check()
     if not letter:
-        hangman_game(hangman, result, lifes_remaining)
+        hangman_game(hangman, word, lifes_remaining)
     else:
-        for index, val in enumerate(result):
-            if letter not in result:
+        for index, val in enumerate(word):
+            if letter not in word:
                 print(f"Desuclpe, mas a palavra não possui a letra '{letter}'.")
                 lifes_remaining -= 1
                 break
@@ -65,19 +65,17 @@ def hangman_game(hangman, result, lifes_remaining):
             print("yaaaayyyyy!!!! You win!")
             print("\n")
         else:
-            hangman_game(hangman, result, lifes_remaining)
+            hangman_game(hangman, word, lifes_remaining)
 
 
 def start():
     selected_word = random.randint(0, (wl.words.__len__() - 1))
     word = wl.words[selected_word].upper()
-    result = []
     hangman = []
-    for x in word:
-        result.append(x)
-    for letter in result:
+    for _ in word:
         hangman.append("-")
-    hangman_game(hangman, result, lifes)
+
+    hangman_game(hangman, word, lifes)
 
 
 start()
