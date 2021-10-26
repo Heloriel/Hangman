@@ -10,7 +10,7 @@ used_letters = []
 
 def game_over():
     print("")
-    print("Suas vidas se esgotaram! x.x Game Over! ")
+    print("\033[91m Suas vidas se esgotaram! x.x Game Over! ")
     print("")
     sys.exit()
 
@@ -32,10 +32,10 @@ def input_check():
         print("\n")
         return False
     elif letter in used_letters:
-        print(f"Você já utilizou a letra '{letter}'! Tente novamente.")
+        print(f"Você já utilizou a letra '{letter.upper()}'! Tente novamente.")
         return False
     else:
-        used_letters.append(letter)
+        used_letters.append(letter.upper())
         return letter.upper()
 
 
@@ -52,7 +52,7 @@ def hangman_game(hangman, word, lifes_remaining):
     else:
         for index, val in enumerate(word):
             if letter not in word:
-                print(f"Desuclpe, mas a palavra não possui a letra '{letter}'.")
+                print(f"Desuclpe, mas a palavra não possui a letra '{letter.upper()}'.")
                 lifes_remaining -= 1
                 break
             else:
@@ -62,7 +62,7 @@ def hangman_game(hangman, word, lifes_remaining):
             for x in hangman:
                 print(x, end=" ")
             print("\n")
-            print("yaaaayyyyy!!!! You win!")
+            print("\033[92m yaaaayyyyy!!!! You win!")
             print("\n")
         else:
             hangman_game(hangman, word, lifes_remaining)
