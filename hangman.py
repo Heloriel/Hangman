@@ -17,14 +17,15 @@ def game_over():
 
 def input_check():
     letter = input("Escolha uma letra: ")
-    if not re.match("^[a-z]*$", letter):
+    letter = letter.upper()
+    if not re.match("^[A-Z]*$", letter):
         print("Entrada inválida! Tente novamente.")
         print("\n")
         return False
-    elif letter == "exit":
+    elif letter == "EXIT":
         print("Encerrando...")
         sys.exit()
-    elif letter == "list":
+    elif letter == "LIST":
         print(f"Letras usadas: {used_letters}")
         return False
     elif len(letter) > 1 or len(letter) <= 0:
@@ -32,11 +33,11 @@ def input_check():
         print("\n")
         return False
     elif letter in used_letters:
-        print(f"Você já utilizou a letra '{letter.upper()}'! Tente novamente.")
+        print(f"Você já utilizou a letra '{letter}'! Tente novamente.")
         return False
     else:
-        used_letters.append(letter.upper())
-        return letter.upper()
+        used_letters.append(letter)
+        return letter
 
 
 def hangman_game(hangman, word, lifes_remaining):
@@ -52,7 +53,7 @@ def hangman_game(hangman, word, lifes_remaining):
     else:
         for index, val in enumerate(word):
             if letter not in word:
-                print(f"Desuclpe, mas a palavra não possui a letra '{letter.upper()}'.")
+                print(f"Desuclpe, mas a palavra não possui a letra '{letter}'.")
                 lifes_remaining -= 1
                 break
             else:
