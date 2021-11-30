@@ -1,4 +1,3 @@
-# Forca
+# Hagman game
 
-Jogo da forca para o terminal do Python
-Desenvolvido para treino.
+Hangman game mande in python for training.
