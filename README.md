@@ -1,3 +1,3 @@
 # Hagman game
 
-Hangman game mande in python for training.
+Simple hangman game mande in python for pratice.
